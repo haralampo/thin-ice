@@ -1,0 +1,56 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Optional, makes it look nicer */
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(5, 40px);
+    gap: 4px;
+    margin-bottom: 10px;
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border: 2px solid #333;
+    border-radius: 5px;
+}
+
+.wall {
+    background-color: #444;
+    color: #fff;
+}
+
+.empty {
+    background-color: #ddd;
+}
+
+.start {
+    background-color: #4caf50;
+    color: white;
+}
+
+.target {
+    background-color: #f44336;
+    color: white;
+}
+
+.player {
+    background-color: #2196f3;
+    color: white;
+}
