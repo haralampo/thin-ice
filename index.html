@@ -33,18 +33,25 @@
                 for (let x = 0; x < board[0].length; x++) {
                     const cellDiv = document.createElement('div');
                     cellDiv.classList.add('cell');
-
                     if (x === playerPos.x && y === playerPos.y) {
                         cellDiv.classList.add('player');
-                        cellDiv.textContent = 'P';
+                        const img = document.createElement('img');
+                        img.src = 'player.gif';
+                        img.style.width = '250%';
+                        img.style.height = '250%';
+                        cellDiv.appendChild(img);
                     } else if (board[y][x] === '1') {
-                        cellDiv.classList.add('wall');
-                    } else if (board[y][x] === 'S') {
-                        cellDiv.classList.add('start');
-                        cellDiv.textContent = 'S';
+                        const img = document.createElement('img');
+                        img.src = 'wall.webp';
+                        img.style.width = '100%';
+                        img.style.height = '100%';
+                        cellDiv.appendChild(img);
                     } else if (board[y][x] === 'T') {
-                        cellDiv.classList.add('target');
-                        cellDiv.textContent = 'T';
+                        const img = document.createElement('img');
+                        img.src = 'finish.webp';
+                        img.style.width = '100%';
+                        img.style.height = '100%';
+                        cellDiv.appendChild(img);
                     } else if (board[y][x] === 'X') {
                         if (flag === 1) {
                             board[y][x] = '0';
@@ -52,6 +59,11 @@
                         }
                         else {
                             cellDiv.classList.add('visited');
+                            const img = document.createElement('img');
+                            img.src = 'water.gif';
+                            img.style.width = '100%';
+                            img.style.height = '100%';
+                            cellDiv.appendChild(img);
                         }
                     } else {
                         cellDiv.classList.add('empty');
@@ -68,12 +80,12 @@
             const newY = playerPos.y + dy;
             const key = `${newX},${newY}`;
             if (board[newY][newX] === '1' || visited.has(key)) return;
+            board[playerPos.y][playerPos.x] = 'X';
             playerPos = { x: newX, y: newY };
             visited.add(key);
             if (board[newY][newX] === 'T') {
                 setTimeout(() => alert('You win!'), 10);
             }
-            board[playerPos.y][playerPos.x] = 'X';
             renderBoard();
         }
 

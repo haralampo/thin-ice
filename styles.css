@@ -16,6 +16,8 @@ body, html {
 #board {
     display: grid;
     grid-template-columns: repeat(5, 40px);
+    gap: 3px;
+    row-gap: 0px;
     margin-bottom: 10px;
 }
 
@@ -27,21 +29,18 @@ body, html {
     justify-content: center;
     font-weight: bold;
     border: 2px solid #333;
-    border-radius: 5px;
+    border-radius: 2px;
 }
 
 .wall {
-    background-color: #444;
-    color: #fff;
+    background: linear-gradient(135deg, #d0f0ff, #a0cfe0);
+    border: 2px solid #5fa9c7;
+    box-shadow: inset -3px -3px 5px #e0faff, inset 3px 3px 5px #7fbcd2;
+    border-radius: 4px;
 }
 
 .empty {
     background-color: #ddd;
-}
-
-.start {
-    background-color: #4caf50;
-    color: white;
 }
 
 .target {
@@ -50,11 +49,13 @@ body, html {
 }
 
 .visited {
-    background-color: #f321bb;
     color: white;
 }
 
 .player {
-    background-color: #2196f3;
     color: white;
+}
+
+.player img {
+    transform: translate(-2.5px, -9px);
 }
