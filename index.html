@@ -24,6 +24,7 @@
 
         let playerPos = { x: 1, y: 1 };
         let visited = new Set();
+        let flag = 0;
 
         function renderBoard() {
             const boardDiv = document.getElementById('board');
@@ -44,6 +45,14 @@
                     } else if (board[y][x] === 'T') {
                         cellDiv.classList.add('target');
                         cellDiv.textContent = 'T';
+                    } else if (board[y][x] === 'X') {
+                        if (flag === 1) {
+                            board[y][x] = '0';
+                            cellDiv.classList.remove('visited');
+                        }
+                        else {
+                            cellDiv.classList.add('visited');
+                        }
                     } else {
                         cellDiv.classList.add('empty');
                     }
@@ -51,6 +60,7 @@
                     boardDiv.appendChild(cellDiv);
                 }
             }
+            flag = 0;
         }
 
         function move(dx, dy) {
@@ -58,11 +68,12 @@
             const newY = playerPos.y + dy;
             const key = `${newX},${newY}`;
             if (board[newY][newX] === '1' || visited.has(key)) return;
-                playerPos = { x: newX, y: newY };
-                visited.add(key);
+            playerPos = { x: newX, y: newY };
+            visited.add(key);
             if (board[newY][newX] === 'T') {
                 setTimeout(() => alert('You win!'), 10);
             }
+            board[playerPos.y][playerPos.x] = 'X';
             renderBoard();
         }
 
@@ -76,6 +87,7 @@
         function resetGame() {
             playerPos = { x: 1, y: 1 };
             visited = new Set(['1,1']);
+            flag = 1;
             renderBoard();
         }
 

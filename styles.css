@@ -16,7 +16,6 @@ body, html {
 #board {
     display: grid;
     grid-template-columns: repeat(5, 40px);
-    gap: 4px;
     margin-bottom: 10px;
 }
 
@@ -47,6 +46,11 @@ body, html {
 
 .target {
     background-color: #f44336;
+    color: white;
+}
+
+.visited {
+    background-color: #f321bb;
     color: white;
 }
 
