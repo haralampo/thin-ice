@@ -1,3 +1,8 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url(public-pixel-font/PublicPixel-rv0pA.ttf);
+}
+
 body, html {
     height: 100%;
     margin: 0;
@@ -41,9 +46,9 @@ body {
     align-items: center;
     width: 100%;
     padding: 1% 5%;
-    background-color: #83c0fe;
-    color: rgb(23, 15, 133);
-    font-family: monospace;
+    background-color: #caedff;
+    color: #11589f;
+    font-family: myFirstFont;
     font-size: 1.8vw;
     max-height: 37px;
 }
@@ -107,7 +112,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    transform: scale(2.3) translate(-3%, -9%);
+    transform: scale(2.3) translate(-2.8%, -9%);
 }
 
 .vacant {
