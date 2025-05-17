@@ -4,67 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thin Ice</title>
+    <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="container">
+    <div id="game-wrapper">
+        <div id="top-bar">
+            <span>LEVEL 1</span>
+            <span>0 / 43</span>
+            <span>SOLVED 0</span>
+        </div>
+    
         <div id="board"></div>
-        <button onclick="resetGame()">Reset</button>
+    
+        <div id="bottom-bar">
+            <span>RESET</span>
+            <span>POINTS 0</span>
+        </div>
     </div>
+    
       
 
     <script>
-        const board = [
-        ['1', '1', '1', '1', '1'],
-        ['1', 'S', '0', 'T', '1'],
-        ['1', '0', '1', '0', '1'],
-        ['1', '0', '0', '0', '1'],
-        ['1', '1', '1', '1', '1']
+        const levels = [
+            [ // Level 1
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '9', '9', '9'],
+                ['9', '1', 'T', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'S', '1', '9', '9', '9'],
+                ['9', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9']
+            ], 
+            [ // Level 2
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '1', '1', '1', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '1', '1', '1', '1', '1', '1', '1', '9', '1', 'T', '1', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '1', '0', '0', '0', '0', '0', '1', '9', '1', '0', '1', '9', '9', '9'],
+                ['9', '1', '1', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '1', '0', '1', '9', '9', '9'],
+                ['9', '1', 'S', '0', '0', '0', '0', '1', '9', '1', '0', '0', '0', '0', '0', '1', '9', '9', '9'],
+                ['9', '1', '1', '1', '1', '1', '1', '1', '9', '1', '1', '1', '1', '1', '1', '1', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9']
+            ],
+            [
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '1', '1', '1', '9', '9', '9', '9', '9', '9', '9', '9', '1', '1', '1', '9', '9', '9'],
+                ['9', '9', '1', 'T', '1', '9', '9', '9', '9', '9', '9', '9', '9', '1', 'S', '1', '9', '9', '9'],
+                ['9', '9', '1', '0', '1', '9', '9', '9', '9', '1', '1', '1', '1', '1', '0', '1', '9', '9', '9'],
+                ['9', '9', '1', '0', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '0', '1', '9', '9', '9'],
+                ['9', '9', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '9', '9', '9'],
+                ['9', '9', '1', '0', '0', '1', '1', '0', '0', '1', '1', '1', '1', '0', '0', '1', '9', '9', '9'],
+                ['9', '9', '1', '1', '1', '1', '1', '1', '1', '1', '9', '9', '1', '1', '1', '1', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9'],
+                ['9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9', '9']
+            ]
         ];
 
-        let playerPos = { x: 1, y: 1 };
+        let currentLevelIndex = 0;
+        let board = levels[currentLevelIndex];
+        let playerPos = findStart(board);
         let visited = new Set();
-        let flag = 0;
+
+        function findStart(board) {
+            for (let x = 0; x < board.length; x++) {
+                for (let y = 0; y < board[0].length; y++) {
+                    if (board[x][y] === 'S') {
+                        return { x, y };
+                    }
+                }
+            }
+        }
 
         function renderBoard() {
             const boardDiv = document.getElementById('board');
             boardDiv.innerHTML = '';
-            for (let y = 0; y < board.length; y++) {
-                for (let x = 0; x < board[0].length; x++) {
+            for (let x = 0; x < board.length; x++) {
+                for (let y = 0; y < board[0].length; y++) {
+                    const key = `${x},${y}`;
                     const cellDiv = document.createElement('div');
                     cellDiv.classList.add('cell');
                     if (x === playerPos.x && y === playerPos.y) {
                         cellDiv.classList.add('player');
                         const img = document.createElement('img');
                         img.src = 'player.gif';
-                        img.style.width = '250%';
-                        img.style.height = '250%';
                         cellDiv.appendChild(img);
-                    } else if (board[y][x] === '1') {
+                    } else if (visited.has(key)) {
+                        cellDiv.classList.add('visited');
+                        const img = document.createElement('img');
+                        img.src = 'water.gif';
+                        cellDiv.appendChild(img);
+                    } else if (board[x][y] === '1') {
+                        cellDiv.classList.add('wall');
                         const img = document.createElement('img');
                         img.src = 'wall.webp';
-                        img.style.width = '100%';
-                        img.style.height = '100%';
                         cellDiv.appendChild(img);
-                    } else if (board[y][x] === 'T') {
+                    } else if (board[x][y] === '9') {
+                        cellDiv.classList.add('vacant');
+                    } else if (board[x][y] === 'T') {
                         const img = document.createElement('img');
                         img.src = 'finish.webp';
-                        img.style.width = '100%';
-                        img.style.height = '100%';
                         cellDiv.appendChild(img);
-                    } else if (board[y][x] === 'X') {
-                        if (flag === 1) {
-                            board[y][x] = '0';
-                            cellDiv.classList.remove('visited');
-                        }
-                        else {
-                            cellDiv.classList.add('visited');
-                            const img = document.createElement('img');
-                            img.src = 'water.gif';
-                            img.style.width = '100%';
-                            img.style.height = '100%';
-                            cellDiv.appendChild(img);
-                        }
                     } else {
                         cellDiv.classList.add('empty');
                     }
@@ -72,34 +131,44 @@
                     boardDiv.appendChild(cellDiv);
                 }
             }
-            flag = 0;
+        }
+
+        function nextLevel() {
+            currentLevelIndex++;
+            if (currentLevelIndex >= levels.length) {
+                alert('You completed all levels!');
+                return;
+            }
+            board = levels[currentLevelIndex];
+            playerPos = findStart(board);
+            visited = new Set();
+            renderBoard();
         }
 
         function move(dx, dy) {
             const newX = playerPos.x + dx;
             const newY = playerPos.y + dy;
             const key = `${newX},${newY}`;
-            if (board[newY][newX] === '1' || visited.has(key)) return;
-            board[playerPos.y][playerPos.x] = 'X';
+            if (board[newX][newY] === '1' || visited.has(key)) return;
+            visited.add(`${playerPos.x},${playerPos.y}`);
             playerPos = { x: newX, y: newY };
-            visited.add(key);
-            if (board[newY][newX] === 'T') {
-                setTimeout(() => alert('You win!'), 10);
+            if (board[newX][newY] === 'T') {
+                nextLevel();
             }
             renderBoard();
         }
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowUp') move(0, -1);
-            if (e.key === 'ArrowDown') move(0, 1);
-            if (e.key === 'ArrowLeft') move(-1, 0);
-            if (e.key === 'ArrowRight') move(1, 0);
+            if (e.key === 'ArrowUp') move(-1, 0);
+            if (e.key === 'ArrowDown') move(1, 0);
+            if (e.key === 'ArrowLeft') move(0, -1);
+            if (e.key === 'ArrowRight') move(0, 1);
         });
 
         function resetGame() {
-            playerPos = { x: 1, y: 1 };
-            visited = new Set(['1,1']);
-            flag = 1;
+            board = levels[currentLevelIndex];
+            playerPos = findStart(board);
+            visited = new Set();
             renderBoard();
         }
 
