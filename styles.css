@@ -34,7 +34,7 @@ body {
     left: 50%;
     transform: translate(-50.05%, -53%);
     width: 61.5vw;     
-    max-width: 696px;  /* Cap the whole game block */
+    max-width: 665px;  /* Cap the whole game block */
     display: flex;
     flex-direction: column;
     align-items: center;
