@@ -11,16 +11,16 @@
 <body>
     <div id="game-wrapper">
         <div id="top-bar">
-            <span>LEVEL 1</span>
-            <span>0 / 43</span>
-            <span>SOLVED 0</span>
+            <span id="level-display">LEVEL 1</span>
+            <span id="levels-display">0 / 12</span>
+            <span id="solved-display">SOLVED 0</span>
         </div>
     
         <div id="board"></div>
     
         <div id="bottom-bar">
             <button id="button" onclick="resetGame()">RESET</button>
-            <span>POINTS 0</span>
+            <span id="points-display">POINTS 0</span>
         </div>
     </div>
     
@@ -82,6 +82,9 @@
         ];
 
         let currentLevelIndex = 0;
+        let steps = 0;
+        let count = 12;
+        let total = 0;
         let board = levels[currentLevelIndex];
         let playerPos = findStart(board);
         let visited = new Set();
@@ -134,6 +137,31 @@
             }
         }
 
+        function countCharacter() {
+            count = 0;
+            for (let x = 0; x < board.length; x++) {
+                for (let y = 0; y < board[0].length; y++) {
+                    if (board[x][y] === '0' || board[x][y] === 'S') {
+                        count++;
+                    }
+                }
+            }
+        }
+
+        function animatePointsIncrease(target) {
+            let p = document.getElementById("points-display");
+            let current = total;
+            const interval = setInterval(() => {
+                current++;
+                p.textContent = `POINTS ${current}`;
+                if (current >= target) {
+                    clearInterval(interval);
+                    total = target;
+                }
+            }, 6); // Controls speed; lower = faster
+        }
+
+
         function nextLevel() {
             currentLevelIndex++;
             if (currentLevelIndex >= levels.length) {
@@ -143,7 +171,24 @@
             board = levels[currentLevelIndex];
             playerPos = findStart(board);
             visited = new Set();
+            changeLevelDisplay();
             renderBoard();
+        }
+
+        function changeLevelDisplay() {
+            let level = document.getElementById("level-display");
+            level.textContent = `LEVEL ${currentLevelIndex + 1}`;
+
+            let p = document.getElementById("points-display");
+            animatePointsIncrease(total + steps * 2);
+
+            let levels = document.getElementById("levels-display");
+            countCharacter();
+            steps = 0;
+            levels.textContent = `${steps} / ${count}`;
+
+            let solved = document.getElementById("solved-display");
+            solved.textContent = `SOLVED ${currentLevelIndex}`;
         }
 
         function move(dx, dy) {
@@ -153,9 +198,17 @@
             if (board[newX][newY] === '1' || visited.has(key)) return;
             visited.add(`${playerPos.x},${playerPos.y}`);
             playerPos = { x: newX, y: newY };
+            steps++;
+            total++;
             if (board[newX][newY] === 'T') {
                 nextLevel();
+                return;
             }
+            let levels = document.getElementById("levels-display");
+            levels.textContent = `${steps} / ${count}`;
+
+            let p = document.getElementById("points-display");
+            p.textContent = `POINTS ${total}`;
             renderBoard();
         }
 
