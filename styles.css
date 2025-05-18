@@ -1,6 +1,6 @@
 @font-face {
-    font-family: myFirstFont;
-    src: url(public-pixel-font/PublicPixel-rv0pA.ttf);
+    font-family: 'myFirstFont';
+    src: url('public-pixel-font/PublicPixel-rv0pA.ttf') format('truetype');
 }
 
 body, html {
@@ -48,7 +48,7 @@ body {
     padding: 1% 5%;
     background-color: #caedff;
     color: #11589f;
-    font-family: myFirstFont;
+    font-family: 'myFirstFont';
     font-size: 1.8vw;
     max-height: 37px;
 }
